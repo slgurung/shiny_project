@@ -3,18 +3,77 @@
 #shinyServer(
 function(input, output, session) {
     output$map <- renderLeaflet({
-        leaflet(Andrew) %>%
-            addProviderTiles("Esri.WorldStreetMap") %>%
-            addPolylines(~Long, ~Lat)
+        leaflet(df) %>% 
+            addProviderTiles("Esri.WorldStreetMap") %>% 
+            #addMarkers(lng=-74.0059, lat=40.7128, popup="New York City") %>% 
+            addCircles(lng = long, lat = lat) %>% 
+            setView(lng=-73.832453, lat=40.724160, zoom = 12) 
     })
     
-    # observe({
-    #     co <- unique(fundamentals[fundamentals$Sector == input$selectSector, "Company"])
-    #     updateSelectizeInput(
-    #         session, "selectCompany",
-    #         choices = co,
-    #         selected = co[1])
-    # })
+    observe({
+         districtSchool <- df[df$county == input$selectCounty, c("school.district", "school")]
+         districts <- unique(districtSchool$school.district)
+         schools <- unique(districtSchool$school)
+         updateSelectInput(
+             session, "selectDistrict",
+             choices = districts,
+             selected = districts[1]
+        )
+        updateSelectInput(
+            session, "selectSchool",
+            choices = schools,
+            selected = schools[1]
+        )
+    })
+    
+    output$schoolTable <- DT::renderDataTable({
+        dtData
+    })
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     # output$cleanedData = renderDataTable({
     #     fundamentals
     # })

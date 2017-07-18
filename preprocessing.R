@@ -1,4 +1,4 @@
-
+setwd('~/nycds10/shiny_project/')
 df <- read.csv('water_lead.csv')
 colnames(df) <- tolower(colnames(df))
 #df1 <- head(df, 4)
@@ -14,19 +14,19 @@ options(digits = 16)
 
 longLatMatrix = apply(longLatMatrix,2, FUN=as.numeric)
 
-df$school.long = longLatMatrix[1, ]
-df$school.lat = longLatMatrix[2, ]
+df$school.lat = longLatMatrix[1, ]
+df$school.long = longLatMatrix[2, ]
 
 longLat = lapply(countyLocation, function(x) strsplit(x, split = '[\\(\\)]')[[1]][2])
 longLatMatrix = sapply(longLat, function(x) strsplit(x, split = ',')[[1]])
 
 longLatMatrix = apply(longLatMatrix,2, FUN=as.numeric)
 
-df$county.long = longLatMatrix[1, ]
-df$county.lat = longLatMatrix[2, ]
+df$county.lat = longLatMatrix[1, ]
+df$county.long = longLatMatrix[2, ]
 
 df$above15.pct = df$outlet.greater.15ppb/df$outlet.num
 
-write.csv(df, 'nys_ps_water_lead.csv', row.names = FALSE)
+write.csv(df, './waterLead/nys_ps_water_lead.csv', row.names = FALSE)
 
 
