@@ -9,7 +9,7 @@ library(data.table)
 library(geojsonio)
 library(maps)
 
-setwd('~/nycds10/shiny_project/waterlead/') 
+
  
 df <- read.csv('nys_ps_water_lead.csv')
 countyList <- unique(df$county)

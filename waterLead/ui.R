@@ -12,17 +12,36 @@ navbarPage(strong("Lead in NYS Public Schools' Fountain Water: "), id="nav",
                         
             leafletOutput("map", width="100%", height="100%"),
             absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
-                            draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
-                            width = 330, height = "400",
+                    draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
+                    width = 330, height = "400",
                                       
-                            h2("School Search"),
-                                      
-                            selectInput("selectCounty", "County", countyList, selected = 'Queens'),
-                            selectInput("selectDistrict", "School District", districtList, selected = 'NYC DOE'),
-                            selectInput("selectSchool", "School", schoolList, selected = 'Q221'),
+                    h2("School Search"),
+                                  
+                    selectInput("selectCounty", "County", countyList, selected = 'Queens'),
+                    selectInput("selectDistrict", "School District", districtList, selected = 'NYC DOE'),
+                    selectInput("selectSchool", "School", schoolList, selected = 'Q221')
                             
-                            plotOutput("hist", height = 200),
-                            plotOutput("scatterCollegeIncome", height = 250)
+                    # plotOutput("histPlt", height = 200),
+                    # plotOutput("scatterPlt", height = 250),
+                    
+            ),
+            absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
+                          draggable = TRUE, top = 60, left = "auto", right = 30, bottom = "auto",
+                          width = 400, height = 500,
+                          
+                          h2(" Introduction"),
+                          
+                          tags$ul(
+                              tags$li(h3("Topic: Lead testing in NYS pulbic school drinking water done during 2016.")),
+                              tags$li(h4("Dataset source: https://health.data.ny.gov/Health/Lead-Testing-in-School-Drinking-Water-Sampling-and/rkyy-fsv9.")),
+                              tags$li(h4("Brief description of cleaned dataset:")),
+                              tags$ul(
+                                  tags$li(h4("Number of Schools: 4366 (4603)")),
+                                  tags$li(h4("Number of Counties: 62")),
+                                  tags$li(h4("Type of School System: BOCES School and  Public School"))
+                                  
+                              )
+                          )
             )
         )
     ),
@@ -55,7 +74,7 @@ navbarPage(strong("Lead in NYS Public Schools' Fountain Water: "), id="nav",
             )
     ),
     
-    tabPanel("Box",
+    tabPanel("BoxPlot",
              fluidRow(
                  class = 'intro',
                  
@@ -81,16 +100,18 @@ navbarPage(strong("Lead in NYS Public Schools' Fountain Water: "), id="nav",
     ),
     tabPanel("Density",
              fluidRow(
-                 class = 'intro',
-
+                 class = 'ggPlot',
+                
+                 # box(width = 1,
+                 #     height = 580
+                 # ),
 
                  box(width = 12,
-                     height = "550px" ,
-                     plotOutput("densePlot")
+                     height = 580,
+                     plotOutput("densePlot", height = 550)
                  )
-                 # box(width = 4,
-                 #     height = "550px" ,
-                 #     plotOutput("densePlot")
+                 # box(width = 1,
+                 #     height = 580 
                  # )
 
              )
@@ -98,33 +119,39 @@ navbarPage(strong("Lead in NYS Public Schools' Fountain Water: "), id="nav",
     ),
     tabPanel("Histogram",
              fluidRow(
-                 class = 'intro',
+                 class = 'ggPlot',
 
 
                  box(width = 12, background = 'blue',
-                     height = "550px" ,
-                     plotOutput("barPlot")
+                     height = 580,
+                     plotOutput("histPlot", height = 550)
                  )
 
              )
-
+    ),
+    tabPanel("BOCES vs PS",
+             fluidRow(
+                 class = 'ggPlot',
+                 box(width = 12, background = 'blue',
+                     height = 580,
+                     plotOutput("bVSpPlot", height = 550)
+                 )
+             )
     ),
     
     tabPanel( strong("..."),
              fluidRow(
                  box(width = 4
                  ),
-                 
                  box(width = 4, 
-                     height = "550px",
+                     height = 550,
                      br(),
                      br(),
                      h2("Thank You."),
                      br(),
                      h2("... Surya Gurung")
                  )
-                 
-             )
+            )
              
     ),
            
