@@ -2,10 +2,11 @@
 
 #shinyServer(
 function(input, output, session) {
-    colPal <- colorNumeric(
-        palette = "Red",
-        domain = df$outlet.num
-        )
+    # colPal <- colorNumeric(
+    #     palette = "red",
+    #     domain = df$outlet.num
+    #     )
+    colPal <- colorNumeric(c('green', 'blue', 'red'), 0:140)
     
     nycounties <- map('county', regions = c('new york'), fill = TRUE, plot = FALSE )
     
@@ -15,8 +16,8 @@ function(input, output, session) {
             #addTiles() %>% 
             #addMarkers(lng=-74.0059, lat=40.7128, popup="New York City") %>% 
             addPolygons(data = nycounties, fillColor = heat.colors(6, alpha = 1), stroke = FALSE) %>%
-            addCircles(lng = long, lat = lat, weight = 2, radius = ~outlet.num, 
-                       label = ~labelData, color = ~colPal(outlet.num)) %>% 
+            addCircles(lng = long, lat = lat, weight = 2, radius = ~outlet.greater.15ppb * 10, 
+                       label = ~(labelData), color = ~colPal(outlet.greater.15ppb)) %>% 
             setView(lng=-73.832453, lat=40.724160, zoom = 12) 
     })
     

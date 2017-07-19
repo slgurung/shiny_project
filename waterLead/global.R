@@ -18,6 +18,7 @@ long = df$school.long
 lat = df$school.lat
 
 dtData <- df[c(1,2,3,9,26)]
-labelData <- paste(df$school, df$address, sep = '\n')
+labelData <- paste(df$school, df$address, sep = ', ')
+labelData <- paste(labelData, df$outlet.greater.15ppb, sep = ', # >15ppb: ')
 
 

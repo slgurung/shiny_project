@@ -1,5 +1,11 @@
 .intro {
-	padding: 0 0 0 0;
+	padding: 0 5px 0 5px;
+	background-color: lightblue;
+}
+
+.dataset {
+	padding: 0 5px 0 5px;
+	
 	background-color: lightblue;
 }
 .tabMargin {

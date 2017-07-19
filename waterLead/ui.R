@@ -1,5 +1,5 @@
 
-navbarPage(strong("NY Public School Water Fountain:"), id="nav",
+navbarPage(strong("Lead in NYS Public Schools' Fountain Water: "), id="nav",
            
     tabPanel("School Map",
         div(class="outer",
@@ -20,11 +20,11 @@ navbarPage(strong("NY Public School Water Fountain:"), id="nav",
                             selectInput("selectCounty", "County", countyList),
                             selectInput("selectDistrict", "School District", districtList),
                             selectInput("selectSchool", "School", schoolList),
-                            ##########
-                            conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",
-                                                       # Only prompt for threshold when coloring or sizing by superzip
-                                            numericInput("threshold", "SuperZIP threshold (top n percentile)", 5)
-                            ),
+                            # ##########
+                            # conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",
+                            #                            # Only prompt for threshold when coloring or sizing by superzip
+                            #                 numericInput("threshold", "SuperZIP threshold (top n percentile)", 5)
+                            # ),
                            ##########
                             plotOutput("hist", height = 200),
                             plotOutput("scatterCollegeIncome", height = 250)
@@ -33,7 +33,11 @@ navbarPage(strong("NY Public School Water Fountain:"), id="nav",
     ),
            
     tabPanel("Dataset",
+             
+             class = "dataset",
             fluidRow(
+                    
+                    
                     column(3,
                         selectInput("displayCounty", "NY Counties", countyList)
                     ),
@@ -49,53 +53,70 @@ navbarPage(strong("NY Public School Water Fountain:"), id="nav",
                     )
             ),
             fluidRow(
-                    column(1,
-                            numericInput("minScore", "Min score", min=0, max=100, value=0)
-                    ),
-                    column(1,
-                            numericInput("maxScore", "Max score", min=0, max=100, value=100)
-                    )
-            ),
-            hr(),
-            DT::dataTableOutput("schoolTable")
+                box(width = 12, 
+                    height = "500px",
+                    DT::dataTableOutput("schoolTable")
+                )
+                
+            )
     ),
     
     tabPanel("EDA",
              fluidRow(
                  class = 'intro',
-                     box(width = 12, background = 'blue',
-                         height = "550px" 
-                     )
-                 
-             ),
-             #hr(),
-             fluidRow(
-                 #class = 'intro',
+                     box(width = 9, background = 'blue',
+                         height = "650px" 
+                     ),
                  box(width = 3,
                      height = "90px",
-                    
-                     
                      sliderInput("slider2", label = "No. of Outlets > 15ppb", min = 0, 
                                  max = 100, value = c(40, 60))
-                    
+                     
                  ),
                  box(width =  3,
-                     height = "50px",
+                     height = "90px",
                      selectInput("selectCounty", "County", countyList)
                      #selectInput("selectDistrict", "School District", districtList)
                      #selectInput("selectSchool", "School", schoolList)
                      
-                ),
-                box(width =  3,
-                    height = "50px",
-                    #selectInput("selectCounty", "County", countyList),
-                    selectInput("selectDistrict", "School District", districtList)
-                    #selectInput("selectSchool", "School", schoolList)
-                    
-                )
-                
+                 ),
+                 box(width =  3,
+                     height = "90px",
+                     #selectInput("selectCounty", "County", countyList),
+                     selectInput("selectDistrict", "School District", districtList)
+                     #selectInput("selectSchool", "School", schoolList)
+                     
+                 )
                  
              )
+             #hr(),
+             # fluidRow(
+             #     #class = 'intro',
+             #     box(width = 3,
+             #         height = "90px",
+             #        
+             #         
+             #         sliderInput("slider2", label = "No. of Outlets > 15ppb", min = 0, 
+             #                     max = 100, value = c(40, 60))
+             #        
+             #     ),
+             #     box(width =  3,
+             #         height = "50px",
+             #         selectInput("selectCounty", "County", countyList)
+             #         #selectInput("selectDistrict", "School District", districtList)
+             #         #selectInput("selectSchool", "School", schoolList)
+             #         
+             #    ),
+             #    box(width =  3,
+             #        height = "50px",
+             #        #selectInput("selectCounty", "County", countyList),
+             #        selectInput("selectDistrict", "School District", districtList)
+             #        #selectInput("selectSchool", "School", schoolList)
+             #        
+             #    )
+             #    
+             #     
+             # )
         
              
     ),
