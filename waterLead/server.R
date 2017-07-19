@@ -97,18 +97,11 @@ function(input, output, session) {
     #         )
     # })
     
-    
-    
-    
-    
-    
-    
     output$schoolTable <- DT::renderDataTable({
         df  %>% filter(county == input$displayCounty & school.district == input$displayDistrict) %>% 
                 select(c(1,2,3,9,26)) %>% 
                 arrange(desc(outlet.greater.15ppb))
     })
-    
     
     output$boxPlot <- renderPlotly({
         df %>% filter(above15.pct != Inf) %>% 
@@ -139,7 +132,8 @@ function(input, output, session) {
             ) 
     })
      output$densePlot <- renderPlot(
-         df_joined %>% filter(avgAbove15ppb > 10) %>% 
+         df %>% filter(above15.pct != Inf) %>% 
+             filter(above15.pct < 1) %>% 
              ggplot(aes(x = log(outlet.greater.15ppb), color = county)) +
              geom_density() 
 
@@ -167,7 +161,7 @@ function(input, output, session) {
          df %>% filter(above15.pct != Inf) %>% 
              filter(above15.pct < 1.2) %>% 
              ggplot(aes(y = above15.pct, x = org.type)) + 
-             geom_boxplot(aes(color = county), show.legend = FALSE)  +
+             geom_boxplot(aes(color = county))  +
              ylab("Percent of outlet with > 15ppb")
      )
     
