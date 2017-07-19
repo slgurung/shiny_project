@@ -1,5 +1,5 @@
 
-navbarPage("NY Public School Water Fountain:", id="nav",
+navbarPage(strong("NY Public School Water Fountain:"), id="nav",
            
     tabPanel("School Map",
         div(class="outer",
@@ -28,11 +28,6 @@ navbarPage("NY Public School Water Fountain:", id="nav",
                            ##########
                             plotOutput("hist", height = 200),
                             plotOutput("scatterCollegeIncome", height = 250)
-            ),
-                        
-            tags$div(id="cite",
-                     'Data compiled for ', 
-                     tags$em('Coming Apart: The State of White America, 1960–2010'), ' by Charles Murray (Crown Forum, 2012).'
             )
         )
     ),
@@ -43,8 +38,8 @@ navbarPage("NY Public School Water Fountain:", id="nav",
                         selectInput("displayCounty", "NY Counties", countyList)
                     ),
                     column(3,
-                        conditionalPanel("input.states",
-                                        selectInput("cities", "Cities", c("All cities"=""), multiple=TRUE)
+                        conditionalPanel("input.displayCounty",
+                                        selectInput("displayDistrict", "Districts", districtList, multiple=TRUE)
                         )
                     ),
                     column(3,
@@ -63,6 +58,46 @@ navbarPage("NY Public School Water Fountain:", id="nav",
             ),
             hr(),
             DT::dataTableOutput("schoolTable")
+    ),
+    
+    tabPanel("EDA",
+             fluidRow(
+                 class = 'intro',
+                     box(width = 12, background = 'blue',
+                         height = "550px" 
+                     )
+                 
+             ),
+             #hr(),
+             fluidRow(
+                 #class = 'intro',
+                 box(width = 3,
+                     height = "90px",
+                    
+                     
+                     sliderInput("slider2", label = "No. of Outlets > 15ppb", min = 0, 
+                                 max = 100, value = c(40, 60))
+                    
+                 ),
+                 box(width =  3,
+                     height = "50px",
+                     selectInput("selectCounty", "County", countyList)
+                     #selectInput("selectDistrict", "School District", districtList)
+                     #selectInput("selectSchool", "School", schoolList)
+                     
+                ),
+                box(width =  3,
+                    height = "50px",
+                    #selectInput("selectCounty", "County", countyList),
+                    selectInput("selectDistrict", "School District", districtList)
+                    #selectInput("selectSchool", "School", schoolList)
+                    
+                )
+                
+                 
+             )
+        
+             
     ),
            
     conditionalPanel("false", icon("crosshair"))

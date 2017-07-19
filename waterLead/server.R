@@ -2,13 +2,37 @@
 
 #shinyServer(
 function(input, output, session) {
+    colPal <- colorNumeric(
+        palette = "Red",
+        domain = df$outlet.num
+        )
+    
+    nycounties <- map('county', regions = c('new york'), fill = TRUE, plot = FALSE )
+    
     output$map <- renderLeaflet({
         leaflet(df) %>% 
             addProviderTiles("Esri.WorldStreetMap") %>% 
+            #addTiles() %>% 
             #addMarkers(lng=-74.0059, lat=40.7128, popup="New York City") %>% 
-            addCircles(lng = long, lat = lat) %>% 
+            addPolygons(data = nycounties, fillColor = heat.colors(6, alpha = 1), stroke = FALSE) %>%
+            addCircles(lng = long, lat = lat, weight = 2, radius = ~outlet.num, 
+                       label = ~labelData, color = ~colPal(outlet.num)) %>% 
             setView(lng=-73.832453, lat=40.724160, zoom = 12) 
     })
+    
+    
+    
+    # observe({
+    #     pal <- colorpal()
+    #     
+    #     leafletProxy("map", data = filteredData()) %>%
+    #         clearShapes() %>%
+    #         addCircles(radius = ~10^mag/10, weight = 1, color = "#777777",
+    #                    fillColor = ~pal(mag), fillOpacity = 0.7, popup = ~paste(mag)
+    #         )
+    # })
+    
+    
     
     observe({
          districtSchool <- df[df$county == input$selectCounty, c("school.district", "school")]
@@ -28,6 +52,11 @@ function(input, output, session) {
     
     output$schoolTable <- DT::renderDataTable({
         dtData
+    })
+    
+    countyData <- reactive({
+         d <- df %>% 
+              filter(Sector == input$selectSector)
     })
     
     

@@ -6,6 +6,8 @@ library(dplyr)
 library(googleVis)
 library(leaflet)
 library(data.table)
+library(geojsonio)
+library(maps)
 
 setwd('~/nycds10/shiny_project/waterlead/')
 df <- read.csv('nys_ps_water_lead.csv')
@@ -16,4 +18,6 @@ long = df$school.long
 lat = df$school.lat
 
 dtData <- df[c(1,2,3,9,26)]
+labelData <- paste(df$school, df$address, sep = '\n')
+
 
