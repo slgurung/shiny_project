@@ -17,15 +17,10 @@ navbarPage(strong("Lead in NYS Public Schools' Fountain Water: "), id="nav",
                                       
                             h2("School Search"),
                                       
-                            selectInput("selectCounty", "County", countyList),
-                            selectInput("selectDistrict", "School District", districtList),
-                            selectInput("selectSchool", "School", schoolList),
-                            # ##########
-                            # conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",
-                            #                            # Only prompt for threshold when coloring or sizing by superzip
-                            #                 numericInput("threshold", "SuperZIP threshold (top n percentile)", 5)
-                            # ),
-                           ##########
+                            selectInput("selectCounty", "County", countyList, selected = 'Queens'),
+                            selectInput("selectDistrict", "School District", districtList, selected = 'NYC DOE'),
+                            selectInput("selectSchool", "School", schoolList, selected = 'Q221'),
+                            
                             plotOutput("hist", height = 200),
                             plotOutput("scatterCollegeIncome", height = 250)
             )
@@ -39,18 +34,17 @@ navbarPage(strong("Lead in NYS Public Schools' Fountain Water: "), id="nav",
                     
                     
                     column(3,
-                        selectInput("displayCounty", "NY Counties", countyList)
+                        selectInput("displayCounty", "NY Counties", countyList, selected = 'Queens')
                     ),
                     column(3,
-                        conditionalPanel("input.displayCounty",
-                                        selectInput("displayDistrict", "Districts", districtList, multiple=TRUE)
-                        )
-                    ),
-                    column(3,
-                        conditionalPanel("input.states",
-                                         selectInput("zipcodes", "Zipcodes", c("All zipcodes"=""), multiple=TRUE)
-                        )
+                        selectInput("displayDistrict", "Districts", districtList, selected = 'NYC DOE')
+                        
                     )
+                    # column(3,
+                    #     conditionalPanel("input.states",
+                    #                      selectInput("zipcodes", "Zipcodes", c("All zipcodes"=""), multiple=TRUE)
+                    #     )
+                    # )
             ),
             fluidRow(
                 box(width = 12, 
@@ -61,63 +55,76 @@ navbarPage(strong("Lead in NYS Public Schools' Fountain Water: "), id="nav",
             )
     ),
     
-    tabPanel("EDA",
+    tabPanel("Box",
              fluidRow(
                  class = 'intro',
-                     box(width = 9, background = 'blue',
-                         height = "650px" 
-                     ),
-                 box(width = 3,
+                 
+                 box(width =  4,
                      height = "90px",
-                     sliderInput("slider2", label = "No. of Outlets > 15ppb", min = 0, 
-                                 max = 100, value = c(40, 60))
+                     selectInput("plotCounty", "County", countyList)
+                     
                      
                  ),
-                 box(width =  3,
+                 box(width =  6,
                      height = "90px",
-                     selectInput("selectCounty", "County", countyList)
-                     #selectInput("selectDistrict", "School District", districtList)
-                     #selectInput("selectSchool", "School", schoolList)
+                     
+                     selectInput("plotDistrict", "School District", districtList)
                      
                  ),
-                 box(width =  3,
-                     height = "90px",
-                     #selectInput("selectCounty", "County", countyList),
-                     selectInput("selectDistrict", "School District", districtList)
-                     #selectInput("selectSchool", "School", schoolList)
-                     
+                     box(width = 12, background = 'blue',
+                         height = "550px" ,
+                         plotlyOutput("boxPlot")
+                     )
+
+             )
+   
+    ),
+    tabPanel("Density",
+             fluidRow(
+                 class = 'intro',
+
+
+                 box(width = 12,
+                     height = "550px" ,
+                     plotOutput("densePlot")
+                 )
+                 # box(width = 4,
+                 #     height = "550px" ,
+                 #     plotOutput("densePlot")
+                 # )
+
+             )
+
+    ),
+    tabPanel("Histogram",
+             fluidRow(
+                 class = 'intro',
+
+
+                 box(width = 12, background = 'blue',
+                     height = "550px" ,
+                     plotOutput("barPlot")
+                 )
+
+             )
+
+    ),
+    
+    tabPanel( strong("..."),
+             fluidRow(
+                 box(width = 4
+                 ),
+                 
+                 box(width = 4, 
+                     height = "550px",
+                     br(),
+                     br(),
+                     h2("Thank You."),
+                     br(),
+                     h2("... Surya Gurung")
                  )
                  
              )
-             #hr(),
-             # fluidRow(
-             #     #class = 'intro',
-             #     box(width = 3,
-             #         height = "90px",
-             #        
-             #         
-             #         sliderInput("slider2", label = "No. of Outlets > 15ppb", min = 0, 
-             #                     max = 100, value = c(40, 60))
-             #        
-             #     ),
-             #     box(width =  3,
-             #         height = "50px",
-             #         selectInput("selectCounty", "County", countyList)
-             #         #selectInput("selectDistrict", "School District", districtList)
-             #         #selectInput("selectSchool", "School", schoolList)
-             #         
-             #    ),
-             #    box(width =  3,
-             #        height = "50px",
-             #        #selectInput("selectCounty", "County", countyList),
-             #        selectInput("selectDistrict", "School District", districtList)
-             #        #selectInput("selectSchool", "School", schoolList)
-             #        
-             #    )
-             #    
-             #     
-             # )
-        
              
     ),
            
